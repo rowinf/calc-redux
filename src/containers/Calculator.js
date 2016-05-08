@@ -6,14 +6,42 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import InputWindowComponent from '../components/InputWindowComponent';
 
+import increment from 'actions/calculator/increment';
+import enterValue from 'actions/calculator/enterValue';
+
 require('styles/Calculator.scss');
 
 class Calculator extends Component {
+  constructor(props) {
+    super(props)
+    this.enterValue1 = props.actions.enterValue.bind(this, 1)
+    this.enterValue2 = props.actions.enterValue.bind(this, 2)
+    this.enterValue3 = props.actions.enterValue.bind(this, 3)
+    this.enterValue4 = props.actions.enterValue.bind(this, 4)
+    this.enterValue5 = props.actions.enterValue.bind(this, 5)
+    this.enterValue6 = props.actions.enterValue.bind(this, 6)
+    this.enterValue7 = props.actions.enterValue.bind(this, 7)
+    this.enterValue8 = props.actions.enterValue.bind(this, 8)
+    this.enterValue9 = props.actions.enterValue.bind(this, 9)
+    this.enterValue0 = props.actions.enterValue.bind(this, 0)
+    this.increment = props.actions.increment.bind(this)
+  }
   render() {
     let {value} = this.props;
     return (
       <div className="calculator-container">
         <InputWindowComponent value={value}/>
+        <button onClick={this.increment}>+=</button>
+        <button onClick={this.enterValue1}>1</button>
+        <button onClick={this.enterValue2}>2</button>
+        <button onClick={this.enterValue3}>3</button>
+        <button onClick={this.enterValue4}>4</button>
+        <button onClick={this.enterValue5}>5</button>
+        <button onClick={this.enterValue6}>6</button>
+        <button onClick={this.enterValue7}>7</button>
+        <button onClick={this.enterValue8}>8</button>
+        <button onClick={this.enterValue9}>9</button>
+        <button onClick={this.enterValue0}>0</button>
       </div>
     );
   }
@@ -29,7 +57,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  const actions = {};
+  const actions = {
+    increment,
+    enterValue
+  };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
 }

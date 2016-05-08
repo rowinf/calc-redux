@@ -1,5 +1,6 @@
 
-import EQUALS from '../../actions/const';
+import {INCREMENT} from 'actions/const';
+import {ENTER_VALUE} from 'actions/const';
 
 /* Define your initial state here.
  *
@@ -15,13 +16,14 @@ module.exports = function(state = initialState, action) {
   let nextState = Object.assign({}, state);
 
   switch(action.type) {
-    case EQUALS: {
-      // Modify next state depending on the action and return it
+    case INCREMENT:
+      nextState.value++;
       return nextState;
-    }
-    default: {
+    case ENTER_VALUE:
+      nextState.value = action.parameter;
+      return nextState;
+    default:
       /* Return original state if no actions were consumed. */
       return state;
-    }
   }
 }

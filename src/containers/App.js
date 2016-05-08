@@ -15,9 +15,7 @@ import Main from '../components/Main';
 class App extends Component {
   render() {
     const {actions, equals} = this.props;
-    return (
-      <Main actions={actions} equals={equals}/>
-    );
+    return <Main actions={actions} equals={equals}/>;
   }
 }
 /* Populated by react-webpack-redux:reducer
@@ -25,8 +23,7 @@ class App extends Component {
  * HINT: if you adjust the initial type of your reducer, you will also have to
  *       adjust it here.
  */
-App.propTypes = {
-};
+App.propTypes = {};
 function mapStateToProps(state) {
   /* Populated by react-webpack-redux:reducer */
   const props = state;
@@ -35,6 +32,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   /* Populated by react-webpack-redux:action */
   const actions = {
+    increment: require('../actions/calculator/increment.js'),
+    enterValue: require('../actions/calculator/enterValue.js')
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
