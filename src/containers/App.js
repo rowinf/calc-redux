@@ -14,8 +14,10 @@ import Main from '../components/Main';
 /* Populated by react-webpack-redux:reducer */
 class App extends Component {
   render() {
-    const {actions} = this.props;
-    return <Main actions={actions}/>;
+    const {actions, equals} = this.props;
+    return (
+      <Main actions={actions} equals={equals}/>
+    );
   }
 }
 /* Populated by react-webpack-redux:reducer
@@ -24,16 +26,16 @@ class App extends Component {
  *       adjust it here.
  */
 App.propTypes = {
-  actions: PropTypes.object.isRequired
 };
 function mapStateToProps(state) {
   /* Populated by react-webpack-redux:reducer */
-  const props = {};
+  const props = state;
   return props;
 }
 function mapDispatchToProps(dispatch) {
   /* Populated by react-webpack-redux:action */
-  const actions = {};
+  const actions = {
+  };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
 }
