@@ -8,5 +8,7 @@
  */
 import { combineReducers } from 'redux';
 /* Populated by react-webpack-redux:reducer */
-const reducers = { equation: require('../reducers/calculator/equation.js') };
+const reducers = {
+  equation: require('../reducers/calculator/equation.js')
+};
 module.exports = combineReducers(reducers);

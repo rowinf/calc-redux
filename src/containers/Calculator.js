@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import InputWindowComponent from '../components/InputWindowComponent';
 
-import increment from 'actions/calculator/increment';
 import enterValue from 'actions/calculator/enterValue';
+import plus from 'actions/calculator/plus';
 
 require('styles/Calculator.scss');
 
@@ -24,14 +24,14 @@ class Calculator extends Component {
     this.enterValue8 = props.actions.enterValue.bind(this, 8)
     this.enterValue9 = props.actions.enterValue.bind(this, 9)
     this.enterValue0 = props.actions.enterValue.bind(this, 0)
-    this.increment = props.actions.increment.bind(this)
+    this.plus = props.actions.plus.bind(this)
   }
   render() {
-    let {value} = this.props;
+    let {expression} = this.props;
     return (
       <div className="calculator-container">
-        <InputWindowComponent value={value}/>
-        <button onClick={this.increment}>+=</button>
+        <InputWindowComponent expression={expression}/>
+        <button onClick={this.plus}>+</button>
         <button onClick={this.enterValue1}>1</button>
         <button onClick={this.enterValue2}>2</button>
         <button onClick={this.enterValue3}>3</button>
@@ -58,8 +58,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   const actions = {
-    increment,
-    enterValue
+    enterValue,
+    plus
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
