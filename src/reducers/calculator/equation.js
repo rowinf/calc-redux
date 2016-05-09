@@ -10,7 +10,8 @@ import leftPad from 'left-pad';
 const initialState = {
   value: 0,
   operator: null,
-  expression: ''
+  expression: '0',
+  freshInput: true
 };
 
 function nextOperand(nextState, action) {
@@ -26,11 +27,19 @@ function append(nextState, action) {
   return nextState;
 }
 
+function freshInput(nextState, action) {
+  nextState.freshInput = false;
+  nextState.expression = action.parameter.toString();
+  return nextState;
+}
+
 function enterValue(nextState, action) {
-  if(nextState.operator) {
-    return nextOperand(nextState, action)
+  if (nextState.operator) {
+    return nextOperand(nextState, action);
+  } else if (nextState.freshInput) {
+    return freshInput(nextState, action);
   } else {
-    return append(nextState, action)
+    return append(nextState, action);
   }
 }
 
@@ -43,6 +52,7 @@ function setOperator(nextState, action) {
 function evaluate(nextState) {
   nextState.operator = null;
   nextState.expression = eval(nextState.expression);
+  nextState.freshInput = true;
   return nextState;
 }
 
