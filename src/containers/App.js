@@ -32,8 +32,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   /* Populated by react-webpack-redux:action */
   const actions = {
-    increment: require('../actions/calculator/increment.js'),
-    enterValue: require('../actions/calculator/enterValue.js')
+    enterValue: require('../actions/calculator/enterValue.js'),
+    plus: require('../actions/calculator/plus.js')
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

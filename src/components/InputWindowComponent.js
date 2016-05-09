@@ -6,10 +6,10 @@ require('styles/InputWindow.scss');
 
 class InputWindowComponent extends Component {
   render() {
-    let {value} = this.props;
+    let {expression} = this.props;
     return (
       <div className="inputwindow-component">
-        {value}
+        {expression}
       </div>
     );
   }
