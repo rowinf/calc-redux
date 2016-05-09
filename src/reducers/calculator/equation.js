@@ -1,5 +1,5 @@
 
-import {PLUS, ENTER_VALUE} from 'actions/const';
+import {PLUS, ENTER_VALUE, EQUALS} from 'actions/const';
 import leftPad from 'left-pad';
 
 /* Define your initial state here.
@@ -40,6 +40,12 @@ function setOperator(nextState, action) {
   return nextState;
 }
 
+function evaluate(nextState) {
+  nextState.operator = null;
+  nextState.expression = eval(nextState.expression);
+  return nextState;
+}
+
 module.exports = function(state = initialState, action) {
   /* Keep the reducer clean - do not mutate the original state. */
   let nextState = Object.assign({}, state);
@@ -49,6 +55,8 @@ module.exports = function(state = initialState, action) {
       return enterValue(nextState, action);
     case PLUS:
       return setOperator(nextState, action);
+    case EQUALS:
+      return evaluate(nextState, action);
     default:
       /* Return original state if no actions were consumed. */
       return state;

@@ -8,6 +8,7 @@ import InputWindowComponent from '../components/InputWindowComponent';
 
 import enterValue from 'actions/calculator/enterValue';
 import plus from 'actions/calculator/plus';
+import equals from 'actions/calculator/equals';
 
 require('styles/Calculator.scss');
 
@@ -25,6 +26,7 @@ class Calculator extends Component {
     this.enterValue9 = props.actions.enterValue.bind(this, 9)
     this.enterValue0 = props.actions.enterValue.bind(this, 0)
     this.plus = props.actions.plus.bind(this)
+    this.equals = props.actions.equals.bind(equals)
   }
   render() {
     let {expression} = this.props;
@@ -32,6 +34,7 @@ class Calculator extends Component {
       <div className="calculator-container">
         <InputWindowComponent expression={expression}/>
         <button onClick={this.plus}>+</button>
+        <button onClick={this.equals}>=</button>
         <button onClick={this.enterValue1}>1</button>
         <button onClick={this.enterValue2}>2</button>
         <button onClick={this.enterValue3}>3</button>
@@ -59,7 +62,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   const actions = {
     enterValue,
-    plus
+    plus,
+    equals
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

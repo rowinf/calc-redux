@@ -33,7 +33,8 @@ function mapDispatchToProps(dispatch) {
   /* Populated by react-webpack-redux:action */
   const actions = {
     enterValue: require('../actions/calculator/enterValue.js'),
-    plus: require('../actions/calculator/plus.js')
+    plus: require('../actions/calculator/plus.js'),
+    equals: require('../actions/calculator/equals.js')
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
