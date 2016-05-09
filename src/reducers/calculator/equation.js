@@ -2,63 +2,69 @@
 import {PLUS, ENTER_VALUE, EQUALS} from 'actions/const';
 import leftPad from 'left-pad';
 
+const assign = Object.assign;
+
+function appendString(appendee, appender, spaces = 0) {
+  return appendee + leftPad(appender, spaces + appender.toString().length);
+}
+
+function appendOperand(nextState, action) {
+  return assign(nextState, {
+    operator: null,
+    expression: appendString(nextState.expression, action.parameter, 1),
+    freshInput: false
+  })
+}
+
+function appendInput(nextState, action) {
+  return assign(nextState, {
+    expression: appendString(nextState.expression, action.parameter)
+  });
+}
+
+function freshInput(nextState, action) {
+  return assign(nextState, {
+    freshInput: false,
+    expression: action.parameter.toString()
+  });
+}
+
+function enterValue(nextState, action) {
+  if (nextState.operator) {
+    return appendOperand(nextState, action);
+  } else if (nextState.freshInput) {
+    return freshInput(nextState, action);
+  } else {
+    return appendInput(nextState, action);
+  }
+}
+
+function setOperator(nextState, action) {
+  return assign(nextState, {
+    operator: action.type,
+    expression: appendString(nextState.expression, action.parameter, 1)
+  });
+}
+
+function evaluate(nextState) {
+  return assign(nextState, {
+    operator: null,
+    expression: eval(nextState.expression),
+    freshInput: true
+  })
+}
+
 /* Define your initial state here.
- *
- * If you change the type from object to something else, do not forget to update
- * src/container/App.js accordingly.
  */
 const initialState = {
-  value: 0,
   operator: null,
   expression: '0',
   freshInput: true
 };
 
-function nextOperand(nextState, action) {
-  nextState.operator = null;
-  nextState.value = action.parameter;
-  nextState.expression += leftPad(action.parameter, 2);
-  return nextState;
-}
-
-function append(nextState, action) {
-  nextState.value = parseInt(nextState.value + action.parameter.toString());
-  nextState.expression += action.parameter.toString();
-  return nextState;
-}
-
-function freshInput(nextState, action) {
-  nextState.freshInput = false;
-  nextState.expression = action.parameter.toString();
-  return nextState;
-}
-
-function enterValue(nextState, action) {
-  if (nextState.operator) {
-    return nextOperand(nextState, action);
-  } else if (nextState.freshInput) {
-    return freshInput(nextState, action);
-  } else {
-    return append(nextState, action);
-  }
-}
-
-function setOperator(nextState, action) {
-  nextState.operator = action.type;
-  nextState.expression += leftPad(action.parameter, 2);
-  return nextState;
-}
-
-function evaluate(nextState) {
-  nextState.operator = null;
-  nextState.expression = eval(nextState.expression);
-  nextState.freshInput = true;
-  return nextState;
-}
-
 module.exports = function(state = initialState, action) {
   /* Keep the reducer clean - do not mutate the original state. */
-  let nextState = Object.assign({}, state);
+  let nextState = assign({}, state);
 
   switch(action.type) {
     case ENTER_VALUE:
